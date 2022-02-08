@@ -8,16 +8,16 @@ public class Labyrinth {
     File file;
     int rows;
     int columns;
-    ArrayList<ArrayList<int>> solutions;
+    ArrayList<ArrayList<Integer>> solutions;
 
-    public void addSolution(ArrayList<int> solution){
+    public void addSolution(ArrayList<Integer> solution){
         this.solutions.add(solution);
     }
 
 
-    Labyrint(File fil) throws FileNotFoundException{
+    Labyrinth(File fil) throws FileNotFoundException{
         this.file = file;
-        this.solutions = new ArrayList<ArrayList<int>>();
+        this.solutions = new ArrayList<ArrayList<Integer>>();
         
         try{
             Scanner scanner = new Scanner(file);
@@ -27,28 +27,30 @@ public class Labyrinth {
             this.rows = Integer.parseInt(rowsAndColumns[0]);
             this.columns = Integer.parseInt(rowsAndColumns[1]);
             this.grid = new char[this.rows][this.columns];
-            int row = 0;
+            int rowNr = 0;
             
             while(scanner.hasNextLine()) {
                 String line = scanner.nextLine();
-                char[] row = line.split("");
-                int column = 0;
+                // char[] row = line.split("(?!^)");
+                // String row = line.split("");
+                // char arr[] = str.toCharArray();
+                int columnNr = 0;
                 
                 for(char x: row){
-                    if(x.startsWith(".")) {
-                        if(column == 0 || column == columns - 1 || row == 0 || row == rows -1){
-                            grid[row][column] =  'X';
+                    if(x == '.') {
+                        if(columnNr == 0 || columnNr == columns - 1 || rowNr == 0 || rowNr == rows -1){
+                            grid[rowNr][columnNr] =  'X';
                         }
                         else{
-                            grid[row][column] = '.';
+                            grid[rowNr][columnNr] = '.';
                         }
                     }
-                    else if (x.startsWith("#")){
-                        grid[row][column] = '#'; 
+                    else if (x == '#'){
+                        grid[rowNr][columnNr] = '#'; 
                     }
-                    column++;
+                    columnNr++;
                 }
-                row++;
+                rowNr++;
             }
             scanner.close();
         }

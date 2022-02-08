@@ -4,8 +4,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class Losninger implements ActionListener {
-    Labyrint labyrint;
-    Rute rute;
+    Labyrinth labyrinth;
     static JPanel mainframe, losninger;
     JButton[][] components;
     int z = 0;
@@ -36,9 +35,8 @@ public class Losninger implements ActionListener {
         mainframe.revalidate();
         }
 
-    public Losninger(Labyrint labyrint, Rute rute, JPanel mainframe, JButton[][] components){
-        this.labyrint = labyrint;
-        this.rute = rute;
+    public Losninger(Labyrinth labyrinth, JPanel mainframe, JButton[][] components){
+        this.labyrinth = labyrinth;
         this.mainframe = mainframe;
         this.components = components;
     }
