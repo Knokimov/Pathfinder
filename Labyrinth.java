@@ -1,25 +1,56 @@
+import javax.swing.*;
 import java.io.File;
+import java.awt.*;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.awt.event.*;
 
-public class Labyrinth {
+// public class Labyrinth implements ActionListener{ 
+public class Labyrinth{ 
     public char[][] grid;
     File file;
+    int z;
     int rows;
     int columns;
     ArrayList<ArrayList<Integer>> solutions;
+    JPanel mainframe, solutionFrame;
+    JButton[][] components;
+    
+    void findSolutions(){
+    
+    }
 
-    // public void addSolution(ArrayList<Integer> solution){
-    //     this.solutions.add(solution);
-    // }
+    // @Override
+    // public void actionPerformed(ActionEvent e) {
+    //     if(mainframe.getComponentCount()>1){
+    //         mainframe.remove(1);
+    //         z=0;
+    //     }
+    //     this.findSolutions();
+    //     solutionFrame = new JPanel();
+    //     solutionFrame.setLayout(new GridLayout(this.solutions.size()/3+1,3));
+    //     mainframe.revalidate();
 
+    //     for(ArrayList<Integer> x: this.solutions){
+    //         JButton nr = new JButton("Solution: " + (z+1));
+    //         nr.setPreferredSize(new Dimension(200,50));
+    //         nr.setHorizontalAlignment(JLabel.CENTER);
+    //         nr.setVerticalAlignment(JLabel.CENTER);
+    //         nr.setBackground(Color.GREEN);
+    //         nr.addActionListener(x);
+    //         solutionFrame.add(nr);
+    //         z++;
+    //     }
+    //     solutionFrame.setAlignmentX(10);
+    //     mainframe.add(solutionFrame);
+    //     mainframe.revalidate();
+    //     }
 
     Labyrinth(File file) throws FileNotFoundException{
         this.file = file;
         this.solutions = new ArrayList<ArrayList<Integer>>();
         
-                    System.out.println("Char");
         try{
             Scanner scanner = new Scanner(file);
             String firstLine = scanner.nextLine();
@@ -30,7 +61,7 @@ public class Labyrinth {
             this.grid = new char[this.rows][this.columns];
             int rowNr = 0;
             
-            System.out.println("row and col" + this.rows + " " + this.columns);
+            // System.out.println("row and col" + this.rows + " " + this.columns);
             while(scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 
