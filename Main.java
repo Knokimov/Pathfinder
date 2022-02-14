@@ -40,7 +40,7 @@ class Main {
         labyrinth.setLayout(new GridLayout(rows,columns));
         JButton[][] components = new JButton[rows][columns];
 
-            System.out.println(l);
+            // System.out.println(l);
 	for(int i = 0; i < rows; i++){
 		for(int j = 0; j < columns; j++){
 			JButton nr = new JButton();
@@ -50,13 +50,13 @@ class Main {
             
             // System.out.println(l);
             
-            if(l.grid[i][j] == '#'){
+            if(l.grid[i][j].type == '#'){
                 nr.setBackground(Color.BLACK);
                 // System.out.println("We are her3");
             }
-            else if (l.grid[i][j] == '.'){
+            else if (l.grid[i][j].type == '.'){
                 nr.setBackground(Color.WHITE);
-                // nr.addActionListener(new Losninger(l,l.grid[i][j],panel,components));
+                nr.addActionListener(new Square(l, i, j, '.'));
             // System.out.println("We are her4");
             }
 
