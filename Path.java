@@ -21,11 +21,12 @@ public class Path implements ActionListener {
     @Override
     public void actionPerformed (ActionEvent e) {
         this.reset();
+        // for(int i = 0; i < path.size(); i+=2){
         for(int i = 0; i < labyrinth.solutions.get(pathNr).path.size(); i+=2){
         // for( x: labyrinth.solutions.get(pathNr).path) {
             System.out.println(i);
-                // components[path.get(i)][path.get(i+1)].setBackground(Color.BLUE);
-                components[0][0].setBackground(Color.BLUE);
+                components[labyrinth.solutions.get(pathNr).path.get(i)][labyrinth.solutions.get(pathNr).path.get(i+1)].setBackground(Color.BLUE);
+                // components[i][i+1].setBackground(Color.BLUE);
                 mainframe.revalidate();
         }
     }
@@ -45,14 +46,7 @@ public class Path implements ActionListener {
         this.components = components;
         this.pathNr = pathNr;
         this.labyrinth = labyrinth;
-        // this.path = new ArrayList<Integer>();
     }
-    // public Path(Labyrinth labyrinth, int pathNr){
-    //     this.labyrinth = labyrinth;
-    //     this.mainframe = labyrinth.mainframe;
-    //     this.components = labyrinth.components;
-    //     this.pathNr = pathNr;
-    // }
 
     // public String toString(){
     //     String result = "";
