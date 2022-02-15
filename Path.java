@@ -29,7 +29,7 @@ public class Path implements ActionListener {
         }
     }
     
-    public Path(int losningnr, Labyrinth labyrinth, int pathNr){
+    public Path(Labyrinth labyrinth, int pathNr){
         this.labyrinth = labyrinth;
         this.mainframe = labyrinth.mainframe;
         this.components = labyrinth.components;

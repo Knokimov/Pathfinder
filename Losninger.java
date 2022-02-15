@@ -33,7 +33,7 @@ public class Losninger implements ActionListener {
         losninger.setAlignmentX(10);
         mainframe.add(losninger);
         mainframe.revalidate();
-        }
+    }
 
     public Losninger(Labyrinth labyrinth, JPanel mainframe, JButton[][] components){
         this.labyrinth = labyrinth;

@@ -21,39 +21,28 @@ public class Labyrinth{
     
     void findSolutions(int row, int column){
         // ArrayList<Integer> test = new ArrayList<Integer>();
-        
-
-
-
-        // test.add(123);
-        // solutions.add(new Path());
+        // if(grid[row][column].type == '.'){
+           Path solution = new Path(this, 0);
+           solutions.add(solution);
+            // if(grid[row][column].type)
+                
+        // if(this.grid[row][column] == '.'){
+        //     // grid[row][column] = '0';
+        //     if(row - 1 >= 0 && grid[row-1][column] == '1'){
+        //         transform(grid, row-1, column);
+        //     }
+        //     if(row + 1 < grid.size() && grid[row+1][column] == '1'){
+        //         transform(grid, row+1, column);
+        //     }
+        //     if(column - 1 >= 0 && grid[row][column-1] == '1'){
+        //         transform(grid, row, column-1);
+        //     }
+        //     if(column + 1 < grid[0].size() && grid[row][column+1] == '1'){
+        //         transform(grid, row, column+1);
+        //         }
+        //     }
+        // }
     }
-
-    // @Override
-    // public void actionPerformed(ActionEvent e) {
-    //     if(mainframe.getComponentCount()>1){
-    //         mainframe.remove(1);
-    //         z=0;
-    //     }
-    //     this.findSolutions();
-    //     solutionFrame = new JPanel();
-    //     solutionFrame.setLayout(new GridLayout(this.solutions.size()/3+1,3));
-    //     mainframe.revalidate();
-
-    //     for(ArrayList<Integer> x: this.solutions){
-    //         JButton nr = new JButton("Solution: " + (z+1));
-    //         nr.setPreferredSize(new Dimension(200,50));
-    //         nr.setHorizontalAlignment(JLabel.CENTER);
-    //         nr.setVerticalAlignment(JLabel.CENTER);
-    //         nr.setBackground(Color.GREEN);
-    //         nr.addActionListener(x);
-    //         solutionFrame.add(nr);
-    //         z++;
-    //     }
-    //     solutionFrame.setAlignmentX(10);
-    //     mainframe.add(solutionFrame);
-    //     mainframe.revalidate();
-    //     }
 
     Labyrinth(File file) throws FileNotFoundException{
         this.file = file;
