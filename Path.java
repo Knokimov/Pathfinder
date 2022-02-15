@@ -9,23 +9,13 @@ public class Path implements ActionListener {
     JButton[][] components;
     int pathNr;
     ArrayList<Integer> path;
-
-    // public void actionPerformed (ActionEvent e) {
-    //     this.reset();
-    //     for(Square x: labyrinth.solutions.get(pathNr).path) {
-    //             components[x.row][x.column].setBackground(Color.BLUE);
-    //             mainframe.revalidate();
-    //     }
-    // }
     
     @Override
     public void actionPerformed (ActionEvent e) {
         this.reset();
-        // for(int i = 0; i < path.size(); i+=2){
         for(int i = 0; i < labyrinth.solutions.get(pathNr).path.size(); i+=2){
-        // for( x: labyrinth.solutions.get(pathNr).path) {
             System.out.println(i);
-                components[labyrinth.solutions.get(pathNr).path.get(i)][labyrinth.solutions.get(pathNr).path.get(i+1)].setBackground(Color.BLUE);
+            components[labyrinth.solutions.get(pathNr).path.get(i)][labyrinth.solutions.get(pathNr).path.get(i+1)].setBackground(Color.BLUE);
                 // components[i][i+1].setBackground(Color.BLUE);
                 mainframe.revalidate();
         }

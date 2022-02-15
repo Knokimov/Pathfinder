@@ -5,11 +5,9 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.awt.event.*;
+import java.util.*;
 
-// public class Labyrinth implements ActionListener{ 
 public class Labyrinth{ 
-    // public char[][] grid;
-    // ArrayList<ArrayList<Square>> grid;
     char grid[][];
     File file;
     int z;
@@ -55,6 +53,48 @@ public class Labyrinth{
         // }
     }
 
+    public void solve(int row, int column) {
+        
+        HashSet<int[]> visited = new HashSet<>();
+        Deque<int[]> queue = new LinkedList<>();
+        // HashMap<Actor, Actor> parents = new HashMap<Actor, Actor>();
+        int[] iteration = {1,0,-1,0,1};
+        // parents.put(start, null);
+        int[] start = {row,column};
+        queue.add(start);
+        // queue.add(column);
+        // visited.add(start.actorId);
+        
+        while(!queue.isEmpty()){ 
+            int[] target = queue.poll();
+            // int targetRow = target[0] + iteration[i];
+            // int targetColumn = target[1] + iteration[i+1];
+            // int targetColumn = queue.poll();
+
+            for(int i = 0; i < 4; i++){
+                int targetRow = target[0] + iteration[i];
+                int targetColumn = target[1] + iteration[i+1];
+                if(targetRow >= 0 && targetRow < rows && targetColumn >= 0 &&
+                   targetColumn < columns && grid[targetRow][targetColumn] == '.'){
+                    int[] neighbour = {target[0]+iteration[i], target[1]+iteration[i+1]};
+
+                    if(targetRow == 0 || targetColumn == 0 || targetRow == rows-1 ||
+                       targetColumn == columns-1){
+                        
+                    }
+
+                    if(!(visited.contains(neighbour))){
+                        queue.add(neighbour);
+                    } 
+                }
+
+
+
+            }
+            visited.add(target);
+        }
+    }
+
     Labyrinth(File file) throws FileNotFoundException{
         this.file = file;
         this.solutions = new ArrayList<Path>();
@@ -70,7 +110,6 @@ public class Labyrinth{
             this.grid = new char[this.rows][this.columns];
             int rowNr = 0;
             
-            // System.out.println("row and col" + this.rows + " " + this.columns);
             while(scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 
@@ -82,19 +121,15 @@ public class Labyrinth{
                 int columnNr = 0;
                 
                 for(char x: row){
-                    // System.out.println("Char" + x);
                     if(x == '.') {
                         if(columnNr == 0 || columnNr == columns - 1 || rowNr == 0 || rowNr == rows -1){
                             grid[rowNr][columnNr] =  'X';
-                            // grid[rowNr][columnNr] =  new Square(this, rowNr, columnNr, 'X');
                         }
                         else{
-                            // grid[rowNr][columnNr] = new Square(this, rowNr, columnNr, '.');
                             grid[rowNr][columnNr] = '.';
                         }
                     }
                     else if (x == '#'){
-                        // grid[rowNr][columnNr] = new Square(this, rowNr, columnNr, '#');;
                         grid[rowNr][columnNr] = '#'; 
                     }
                     columnNr++;
