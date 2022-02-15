@@ -3,11 +3,13 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class Losninger implements ActionListener {
+public class Solutions implements ActionListener {
     Labyrinth labyrinth;
     static JPanel mainframe, losninger;
     JButton[][] components;
     int z = 0;
+    int row;
+    int column;
     
     @Override
     public void actionPerformed (ActionEvent e) {
@@ -15,18 +17,18 @@ public class Losninger implements ActionListener {
             mainframe.remove(1);
             z=0;
         }
-        labyrint.finnUtveiFra(rute.column, rute.row);
+        labyrinth.findSolutions(column, row);
         losninger = new JPanel();
-        losninger.setLayout(new GridLayout(labyrint.utveier.size()/3+1,3));
+        losninger.setLayout(new GridLayout(labyrinth.solutions.size()/3+1,3));
         mainframe.revalidate();
 
-        for (ArrayList<Tuppel> x: labyrint.utveier){
+        for (Path x: labyrinth.solutions){
             JButton nr = new JButton("Solution: " + (z+1));
             nr.setPreferredSize(new Dimension(200,50));
             nr.setHorizontalAlignment(JLabel.CENTER);
             nr.setVerticalAlignment(JLabel.CENTER);
             nr.setBackground(Color.GREEN);
-            nr.addActionListener(new Utvei(mainframe, components, z, labyrint));
+            nr.addActionListener(new Path(mainframe, components, z, labyrinth));
             losninger.add(nr);
             z++;
         }
@@ -35,9 +37,11 @@ public class Losninger implements ActionListener {
         mainframe.revalidate();
     }
 
-    public Losninger(Labyrinth labyrinth, JPanel mainframe, JButton[][] components){
+    public Solutions(Labyrinth labyrinth, JPanel mainframe, JButton[][] components, int row, int column){
         this.labyrinth = labyrinth;
         this.mainframe = mainframe;
         this.components = components;
+        this.row = row;
+        this.column = column;
     }
 }

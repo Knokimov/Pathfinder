@@ -17,7 +17,7 @@ class Main {
             // System.exit(1);
         // } else {
                 // File f = chooser.getSelectedFile();
-                File f = new File("/home/andrey/Desktop/Pathfinder/labyrinths/1.in");
+                File f = new File("/home/andrey/Desktop/Compare/Pathfinder/labyrinths/1.in");
                 Scanner reader = null;
             try {
                 l = new Labyrinth(f);            
@@ -40,27 +40,20 @@ class Main {
         labyrinth.setLayout(new GridLayout(rows,columns));
         JButton[][] components = new JButton[rows][columns];
 
-            // System.out.println(l);
 	for(int i = 0; i < rows; i++){
 		for(int j = 0; j < columns; j++){
 			JButton nr = new JButton();
 			nr.setPreferredSize(new Dimension(700/rows,700/columns));
 			components[i][j] = nr;
-            // System.out.println("We are here");
             
-            // System.out.println(l);
-            
-            if(l.grid[i][j].type == '#'){
+            if(l.grid[i][j] == '#'){
                 nr.setBackground(Color.BLACK);
-                // System.out.println("We are her3");
             }
-            else if (l.grid[i][j].type == '.'){
+            else if (l.grid[i][j] == '.'){
                 nr.setBackground(Color.WHITE);
-                nr.addActionListener(new Square(l, i, j, '.'));
-            // System.out.println("We are her4");
+                nr.addActionListener(new Solutions(l, panel, components, i, j));
             }
 
-            // System.out.println("We are here2");
             nr.setHorizontalAlignment(JLabel.CENTER);
             nr.setVerticalAlignment(JLabel.CENTER);
             nr.setBorder(BorderFactory.createLineBorder(Color.BLACK));

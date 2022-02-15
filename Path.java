@@ -8,13 +8,24 @@ public class Path implements ActionListener {
     JPanel mainframe;
     JButton[][] components;
     int pathNr;
-    ArrayList<Square> path;
+    ArrayList<Integer> path;
 
+    // public void actionPerformed (ActionEvent e) {
+    //     this.reset();
+    //     for(Square x: labyrinth.solutions.get(pathNr).path) {
+    //             components[x.row][x.column].setBackground(Color.BLUE);
+    //             mainframe.revalidate();
+    //     }
+    // }
+    
     @Override
     public void actionPerformed (ActionEvent e) {
         this.reset();
-        for(Square x: labyrinth.solutions.get(pathNr).path) {
-                components[x.row][x.column].setBackground(Color.BLUE);
+        for(int i = 0; i < labyrinth.solutions.get(pathNr).path.size(); i+=2){
+        // for( x: labyrinth.solutions.get(pathNr).path) {
+            System.out.println(i);
+                // components[path.get(i)][path.get(i+1)].setBackground(Color.BLUE);
+                components[0][0].setBackground(Color.BLUE);
                 mainframe.revalidate();
         }
     }
@@ -28,19 +39,26 @@ public class Path implements ActionListener {
             }
         }
     }
-    
-    public Path(Labyrinth labyrinth, int pathNr){
-        this.labyrinth = labyrinth;
-        this.mainframe = labyrinth.mainframe;
-        this.components = labyrinth.components;
-        this.pathNr = pathNr;
-    }
 
-    public String toString(){
-        String result = "";
-            for(Square x: path){
-                result += x;
-            }
-        return result;
+    public Path(JPanel mainframe, JButton[][] components, int pathNr, Labyrinth labyrinth){
+        this.mainframe = mainframe;
+        this.components = components;
+        this.pathNr = pathNr;
+        this.labyrinth = labyrinth;
+        // this.path = new ArrayList<Integer>();
     }
+    // public Path(Labyrinth labyrinth, int pathNr){
+    //     this.labyrinth = labyrinth;
+    //     this.mainframe = labyrinth.mainframe;
+    //     this.components = labyrinth.components;
+    //     this.pathNr = pathNr;
+    // }
+
+    // public String toString(){
+    //     String result = "";
+    //         for(Square x: path){
+    //             result += x;
+    //         }
+    //     return result;
+    // }
 }

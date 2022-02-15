@@ -10,7 +10,7 @@ import java.awt.event.*;
 public class Labyrinth{ 
     // public char[][] grid;
     // ArrayList<ArrayList<Square>> grid;
-    Square grid[][];
+    char grid[][];
     File file;
     int z;
     int rows;
@@ -22,8 +22,19 @@ public class Labyrinth{
     void findSolutions(int row, int column){
         // ArrayList<Integer> test = new ArrayList<Integer>();
         // if(grid[row][column].type == '.'){
-           Path solution = new Path(this, 0);
+
+           Path solution = new Path(mainframe, components, 0, this);
+           ArrayList<Integer> test = new ArrayList<Integer>();
+           test.add(2);
+           test.add(2);
+           test.add(1);
+           test.add(1);
+           test.add(0);
+           test.add(0);
+           solution.path = test;
+
            solutions.add(solution);
+
             // if(grid[row][column].type)
                 
         // if(this.grid[row][column] == '.'){
@@ -56,7 +67,7 @@ public class Labyrinth{
             this.rows = Integer.parseInt(rowsAndColumns[0]);
             this.columns = Integer.parseInt(rowsAndColumns[1]);
             // this.grid = new char[this.rows][this.columns];
-            this.grid = new Square[this.rows][this.columns];
+            this.grid = new char[this.rows][this.columns];
             int rowNr = 0;
             
             // System.out.println("row and col" + this.rows + " " + this.columns);
@@ -74,17 +85,17 @@ public class Labyrinth{
                     // System.out.println("Char" + x);
                     if(x == '.') {
                         if(columnNr == 0 || columnNr == columns - 1 || rowNr == 0 || rowNr == rows -1){
-                            // grid[rowNr][columnNr] =  'X';
-                            grid[rowNr][columnNr] =  new Square(this, rowNr, columnNr, 'X');
+                            grid[rowNr][columnNr] =  'X';
+                            // grid[rowNr][columnNr] =  new Square(this, rowNr, columnNr, 'X');
                         }
                         else{
-                            grid[rowNr][columnNr] = new Square(this, rowNr, columnNr, '.');
-                            // grid[rowNr][columnNr] = '.';
+                            // grid[rowNr][columnNr] = new Square(this, rowNr, columnNr, '.');
+                            grid[rowNr][columnNr] = '.';
                         }
                     }
                     else if (x == '#'){
-                        grid[rowNr][columnNr] = new Square(this, rowNr, columnNr, '#');;
-                        // grid[rowNr][columnNr] = '#'; 
+                        // grid[rowNr][columnNr] = new Square(this, rowNr, columnNr, '#');;
+                        grid[rowNr][columnNr] = '#'; 
                     }
                     columnNr++;
                 }
@@ -97,14 +108,14 @@ public class Labyrinth{
         }
     }
 
-    public String toString(){
-        String result = "";   
-        for (Square[] x: grid){
-            result = result + "\n";
-            for(Square y: x){
-                result = result + y;
-            }
-        }
-        return result;
-    }
+    // public String toString(){
+    //     String result = "";   
+    //     for (Square[] x: grid){
+    //         result = result + "\n";
+    //         for(Square y: x){
+    //             result = result + y;
+    //         }
+    //     }
+    //     return result;
+    // }
 }
