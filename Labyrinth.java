@@ -10,16 +10,12 @@ import java.util.*;
 public class Labyrinth{ 
     char grid[][];
     File file;
-    int z;
-    int rows;
-    int columns;
+    // int z;
+    int rows, columns;
     ArrayList<Path> solutions;
     JPanel mainframe, solutionFrame;
     JButton[][] components;
     
-    void findSolutions(int row, int column){
-    }
-
     Labyrinth(File file) throws FileNotFoundException{
         this.file = file;
         this.solutions = new ArrayList<Path>();
@@ -31,7 +27,6 @@ public class Labyrinth{
             
             this.rows = Integer.parseInt(rowsAndColumns[0]);
             this.columns = Integer.parseInt(rowsAndColumns[1]);
-            // this.grid = new char[this.rows][this.columns];
             this.grid = new char[this.rows][this.columns];
             int rowNr = 0;
             
@@ -67,15 +62,4 @@ public class Labyrinth{
             System.out.println(e);
         }
     }
-
-    // public String toString(){
-    //     String result = "";   
-    //     for (Square[] x: grid){
-    //         result = result + "\n";
-    //         for(Square y: x){
-    //             result = result + y;
-    //         }
-    //     }
-    //     return result;
-    // }
 }

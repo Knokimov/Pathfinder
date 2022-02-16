@@ -16,7 +16,6 @@ public class Path implements ActionListener {
         for(int i = 0; i < labyrinth.solutions.get(pathNr).path.size(); i+=2){
             System.out.println(i);
             components[labyrinth.solutions.get(pathNr).path.get(i)][labyrinth.solutions.get(pathNr).path.get(i+1)].setBackground(Color.BLUE);
-                // components[i][i+1].setBackground(Color.BLUE);
                 mainframe.revalidate();
         }
     }
@@ -37,12 +36,4 @@ public class Path implements ActionListener {
         this.pathNr = pathNr;
         this.labyrinth = labyrinth;
     }
-
-    // public String toString(){
-    //     String result = "";
-    //         for(Square x: path){
-    //             result += x;
-    //         }
-    //     return result;
-    // }
 }

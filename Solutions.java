@@ -6,11 +6,10 @@ import java.util.*;
 
 public class Solutions implements ActionListener {
     Labyrinth labyrinth;
-    static JPanel mainframe, solutions;
+    JPanel mainframe, solutions;
     JButton[][] components;
-    int pathNr = 0;
-    int row;
-    int column;
+    int pathNr = 0, row, column;
+    // ArrayList<Path> pathContainer;
 
     public void solve() {
         HashSet<Integer> visited = new HashSet<>();
@@ -43,9 +42,8 @@ public class Solutions implements ActionListener {
                         parents.put(neighbour, target);
 
                     } else if(labyrinth.grid[neighbourRow][neighbourColumn] == 'X'){
-                        Path path = new Path(labyrinth.mainframe, labyrinth.components, pathNr,
+                        Path path = new Path(mainframe, components, pathNr,
                                     this.labyrinth);
-                        pathNr++;
                         ArrayList<Integer> pathFound = new ArrayList<>();
                         parents.put(neighbour, target);
                         int currentNode = neighbour;
@@ -72,7 +70,6 @@ public class Solutions implements ActionListener {
             mainframe.remove(1);
             pathNr=0;
         }
-        // labyrinth.findSolutions(column, row);
         this.solve();
         solutions = new JPanel();
         solutions.setLayout(new GridLayout(labyrinth.solutions.size()/3+1,3));
@@ -97,8 +94,6 @@ public class Solutions implements ActionListener {
         this.labyrinth = labyrinth;
         this.mainframe = mainframe;
         this.components = components;
-        // this.mainframe = labyrinth.mainframe;
-        // this.components = labyrinth.components;
         this.row = row;
         this.column = column;
     }
