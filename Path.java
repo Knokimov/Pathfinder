@@ -3,17 +3,19 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class Utvei implements ActionListener {
-    Labyrint labyrint;
+public class Path implements ActionListener {
+    Labyrinth labyrinth;
     JPanel mainframe;
     JButton[][] components;
-    int losningnr;
-
+    int pathNr;
+    ArrayList<Integer> path;
+    
     @Override
     public void actionPerformed (ActionEvent e) {
         this.reset();
-        for (Tuppel x: labyrint.utveier.get(losningnr)) {
-                components[x.row][x.column].setBackground(Color.BLUE);
+        for(int i = 0; i < labyrinth.solutions.get(pathNr).path.size(); i+=2){
+            // System.out.println(i);
+            components[labyrinth.solutions.get(pathNr).path.get(i)][labyrinth.solutions.get(pathNr).path.get(i+1)].setBackground(Color.BLUE);
                 mainframe.revalidate();
         }
     }
@@ -27,13 +29,11 @@ public class Utvei implements ActionListener {
             }
         }
     }
-    
-    public Utvei(JPanel mainframe, JButton[][] components, int losningnr, Labyrint labyrint){
+
+    public Path(JPanel mainframe, JButton[][] components, int pathNr, Labyrinth labyrinth){
         this.mainframe = mainframe;
         this.components = components;
-        this.losningnr = losningnr;
-        this.labyrint = labyrint;
+        this.pathNr = pathNr;
+        this.labyrinth = labyrinth;
     }
 }
-
-

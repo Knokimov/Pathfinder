@@ -1,6 +1,5 @@
 import java.awt.*;
 import javax.swing.*;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -9,59 +8,64 @@ class Main {
     public static void main (String[] args) {
         int rows = 1;
         int columns = 1;
-        Labyrint l = null;
-        
-        JFileChooser velger = new JFileChooser();
-        int resultat = velger.showOpenDialog(null);
-        if (resultat != JFileChooser.APPROVE_OPTION)
-            System.exit(1);
-            File f = velger.getSelectedFile();
-            Scanner leser = null;
-        try {
-            l = new Labyrint(f);            
-            leser = new Scanner(f);
-            String firstLine = leser.nextLine();
-            String[] rowsAndColumns = firstLine.split(" ");
-            rows = Integer.parseInt(rowsAndColumns[0]);
-            columns = Integer.parseInt(rowsAndColumns[1]);
+        Labyrinth l = null;
+       
+        // JFileChooser chooser = new JFileChooser();
+        // JFileChooser chooser = new JFileChooser("~/Desktop/Pathfinder/labyrinths");
+        // int result = chooser.showOpenDialog(null);
+        // if (result != JFileChooser.APPROVE_OPTION){
+            // System.exit(1);
+        // } else {
+                // File f = chooser.getSelectedFile();
+                File f = new File("/home/andrey/Desktop/Compare/Pathfinder/labyrinths/5.in");
+                Scanner reader = null;
+            try {
+                l = new Labyrinth(f);            
+                reader = new Scanner(f);
+                String firstLine = reader.nextLine();
+                String[] rowsAndColumns = firstLine.split(" ");
+                rows = Integer.parseInt(rowsAndColumns[0]);
+                columns = Integer.parseInt(rowsAndColumns[1]);
 
-        } catch (FileNotFoundException e) {
-            System.exit(1);
-        }
-
-        JFrame vindu = new JFrame("Labyrint");
-        vindu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            } catch (FileNotFoundException e) {
+                System.exit(1);
+            }
+        // }
+        JFrame window = new JFrame("Labyrinth");
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JPanel panel = new JPanel();
-        vindu.add(panel);
+        window.add(panel);
         panel.setPreferredSize(new Dimension(2000,2000));
-        JPanel labyrint = new JPanel();
-        labyrint.setLayout(new GridLayout(rows,columns));
+        JPanel labyrinth = new JPanel();
+        labyrinth.setLayout(new GridLayout(rows,columns));
         JButton[][] components = new JButton[rows][columns];
 
-        for(Rute[] x: l.ruteArray){
-            for(Rute y: x){
-                JButton nr = new JButton();
-                nr.setPreferredSize(new Dimension(700/rows,700/columns));
-                components[y.row][y.column] = nr;
-                if(y instanceof SortRute){
-                    nr.setBackground(Color.BLACK);
-                }
-                else if (y instanceof HvitRute){
-                    nr.setBackground(Color.WHITE);
-                    nr.addActionListener(new Losninger(l,y,panel,components));
-                }
-                nr.setHorizontalAlignment(JLabel.CENTER);
-                nr.setVerticalAlignment(JLabel.CENTER);
-                nr.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-                labyrint.add(nr);
+	for(int i = 0; i < rows; i++){
+		for(int j = 0; j < columns; j++){
+			JButton nr = new JButton();
+			nr.setPreferredSize(new Dimension(700/rows,700/columns));
+			components[i][j] = nr;
+            
+            if(l.grid[i][j] == '#'){
+                nr.setBackground(Color.BLACK);
             }
+            else if (l.grid[i][j] == '.'){
+                nr.setBackground(Color.WHITE);
+                nr.addActionListener(new Solutions(l, panel, components, i, j));
+            }
+
+            nr.setHorizontalAlignment(JLabel.CENTER);
+            nr.setVerticalAlignment(JLabel.CENTER);
+            nr.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            labyrinth.add(nr);
         }
-        panel.add(labyrint);
+    }
+        panel.add(labyrinth);
         JScrollPane scrollableArea = new JScrollPane(panel);  
         scrollableArea.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);  
         scrollableArea.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);   
-        vindu.getContentPane().add(scrollableArea);  
-        vindu.pack();
-        vindu.setVisible(true);
+        window.getContentPane().add(scrollableArea);  
+        window.pack();
+        window.setVisible(true);
     }
 }
