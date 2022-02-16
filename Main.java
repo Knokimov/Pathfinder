@@ -17,7 +17,7 @@ class Main {
             // System.exit(1);
         // } else {
                 // File f = chooser.getSelectedFile();
-                File f = new File("/home/andrey/Desktop/Compare/Pathfinder/labyrinths/1.in");
+                File f = new File("/home/andrey/Desktop/Compare/Pathfinder/labyrinths/6.in");
                 Scanner reader = null;
             try {
                 l = new Labyrinth(f);            

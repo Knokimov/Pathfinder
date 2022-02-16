@@ -17,66 +17,52 @@ public class Solutions implements ActionListener {
         Deque<Integer> queue = new LinkedList<>();
         HashMap<Integer, Integer> parents = new HashMap<>();
         int[] iterationTable = {1,0,-1,0,1};
-        // parents.put(start, null);
-        // int[] start = {row,column};
+        
         System.out.println(row + " " + column);
+        
         int start = (row << 16) + column;
-        parents.put(start, null);
         queue.add(start);
         
+        System.out.println("rows: " + labyrinth.rows + " columns: " + labyrinth.columns);
+ 
         while(!queue.isEmpty()){ 
             int target = queue.poll();
-            // System.out.println(target + " size: " + queue.size());
-            // System.out.println(visited.size());
            
             for(int i = 0; i < 4; i++){
-                int neighbourRow = target - ((target >> 16) << 16) + iterationTable[i+1];
-                int neighbourColumn = (target >> 16) + iterationTable[i];
-                // System.out.println(neighbourRow + " row and column " + neighbourColumn);
+                int neighbourRow = (target >> 16) + iterationTable[i];
+                int neighbourColumn = target - ((target >> 16) << 16) + iterationTable[i+1];
+                System.out.println(neighbourRow + " row and column " + neighbourColumn);
                 
                 if(neighbourRow >= 0 && neighbourRow < labyrinth.rows && neighbourColumn >= 0 &&
-                   neighbourColumn < labyrinth.columns && labyrinth.grid[neighbourRow][neighbourColumn] == '.'){
-                    // int[] neighbour = {target[0]+iterationTable[i], target[1]+iterationTable[i+1]};
-                System.out.println(neighbourRow + " row and column " + neighbourColumn);
+                   neighbourColumn < labyrinth.columns){
                     int neighbour = (neighbourRow << 16) + neighbourColumn;
-                    // System.out.println(neighbour + " neighbour " );
-
-                    // if(neighbourRow == 0 || neighbourColumn == 0 ||
-                        // neighbourRow == labyrinth.rows-1 ||
-                        // neighbourColumn == labyrinth.columns-1){
-                        System.out.println("here it is");
-                        // ArrayList<Integer> pathFound = new ArrayList<>();
-                        
-                        int currentNode = neighbour;
-                        
-                        // while(parents.containsKey(currentNode)){
-                            // pathFound.add(currentNode);
-                            // currentNode = parents.get(currentNode);
-                            Path path = new Path(this.mainframe, this.components, 0, this.labyrinth);
-
-                           // for(int x: pathFound){
-                               // path.path.add(x -((x >> 16) << 16));
-                               // path.path.add(x >> 16);
-                           // }
-                            System.out.println(path);
-
-                            // solution.path = path;
-                            labyrinth.solutions.add(path);
-                        // }
-                    // }
-
-                    if(!(visited.contains(neighbour))){
+                    
+                    if(labyrinth.grid[neighbourRow][neighbourColumn] == '.' && !(visited.contains(neighbour))){
                         queue.add(neighbour);
                         visited.add(neighbour);
-                        // System.out.println("No Neighbour here" + neighbour);
-                        // ArrayList<int[]> parent = new ArrayList<>();
-                        // parent.add(target);
                         parents.put(neighbour, target);
+
+                    } else if(labyrinth.grid[neighbourRow][neighbourColumn] == 'X'){
+                        Path path = new Path(labyrinth.mainframe, labyrinth.components, pathNr,
+                                    this.labyrinth);
+                        pathNr++;
+                        ArrayList<Integer> pathFound = new ArrayList<>();
+                        parents.put(neighbour, target);
+                        int currentNode = neighbour;
+                        
+                        while(parents.containsKey(currentNode)){
+                            pathFound.add(currentNode >> 16);
+                            pathFound.add(currentNode - ((currentNode >> 16) << 16));
+                            currentNode = parents.get(currentNode);
+                        }
+
+                        path.path = pathFound;
+                        labyrinth.solutions.add(path);
+                        System.out.println(pathFound);
                     }
                 }
             }
             visited.add(target);
-            // System.out.println("added " + target);
         }
     }
     
