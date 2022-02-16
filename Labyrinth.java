@@ -21,17 +21,17 @@ public class Labyrinth{
         // ArrayList<Integer> test = new ArrayList<Integer>();
         // if(grid[row][column].type == '.'){
 
-           Path solution = new Path(mainframe, components, 0, this);
-           ArrayList<Integer> test = new ArrayList<Integer>();
-           test.add(2);
-           test.add(2);
-           test.add(1);
-           test.add(1);
-           test.add(0);
-           test.add(0);
-           solution.path = test;
+           // Path solution = new Path(mainframe, components, 0, this);
+           // ArrayList<Integer> test = new ArrayList<Integer>();
+           // test.add(2);
+           // test.add(2);
+           // test.add(1);
+           // test.add(1);
+           // test.add(0);
+           // test.add(0);
+           // solution.path = test;
 
-           solutions.add(solution);
+           // solutions.add(solution);
 
             // if(grid[row][column].type)
                 
@@ -57,38 +57,39 @@ public class Labyrinth{
         
         HashSet<int[]> visited = new HashSet<>();
         Deque<int[]> queue = new LinkedList<>();
-        // HashMap<Actor, Actor> parents = new HashMap<Actor, Actor>();
+        HashMap<int[], ArrayList<int[]>> parents = new HashMap<>();
         int[] iteration = {1,0,-1,0,1};
         // parents.put(start, null);
         int[] start = {row,column};
+        parents.put(start, null);
         queue.add(start);
-        // queue.add(column);
-        // visited.add(start.actorId);
         
         while(!queue.isEmpty()){ 
             int[] target = queue.poll();
-            // int targetRow = target[0] + iteration[i];
-            // int targetColumn = target[1] + iteration[i+1];
-            // int targetColumn = queue.poll();
 
             for(int i = 0; i < 4; i++){
-                int targetRow = target[0] + iteration[i];
-                int targetColumn = target[1] + iteration[i+1];
-                if(targetRow >= 0 && targetRow < rows && targetColumn >= 0 &&
-                   targetColumn < columns && grid[targetRow][targetColumn] == '.'){
+                int neighbourRow = target[0] + iteration[i];
+                int neighbourColumn = target[1] + iteration[i+1];
+                if(neighbourRow >= 0 && neighbourRow < rows && neighbourColumn >= 0 &&
+                   neighbourColumn < columns && grid[neighbourRow][neighbourColumn] == '.'){
                     int[] neighbour = {target[0]+iteration[i], target[1]+iteration[i+1]};
 
-                    if(targetRow == 0 || targetColumn == 0 || targetRow == rows-1 ||
-                       targetColumn == columns-1){
-                        
+                    if(neighbourRow == 0 || neighbourColumn == 0 || neighbourRow == rows-1 ||
+                       neighbourColumn == columns-1){
+                       Path solution = new Path(mainframe, components, 0, this);
+                       ArrayList<Integer> path = new ArrayList<Integer>();
+                       solution.path = path;
+                       solutions.add(solution);
+
                     }
 
                     if(!(visited.contains(neighbour))){
                         queue.add(neighbour);
-                    } 
+                        ArrayList<int[]> parent = new ArrayList<>();
+                        parent.add(target);
+                        parents.put(neighbour, parent);
+                    }
                 }
-
-
 
             }
             visited.add(target);
