@@ -10,7 +10,6 @@ import java.util.*;
 public class Labyrinth{ 
     char grid[][];
     File file;
-    // int z;
     int rows, columns;
     ArrayList<Path> solutions;
     JPanel mainframe, solutionFrame;

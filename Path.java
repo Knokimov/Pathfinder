@@ -14,7 +14,7 @@ public class Path implements ActionListener {
     public void actionPerformed (ActionEvent e) {
         this.reset();
         for(int i = 0; i < labyrinth.solutions.get(pathNr).path.size(); i+=2){
-            System.out.println(i);
+            // System.out.println(i);
             components[labyrinth.solutions.get(pathNr).path.get(i)][labyrinth.solutions.get(pathNr).path.get(i+1)].setBackground(Color.BLUE);
                 mainframe.revalidate();
         }

@@ -16,21 +16,14 @@ public class Solutions implements ActionListener {
         Deque<Integer> queue = new LinkedList<>();
         HashMap<Integer, Integer> parents = new HashMap<>();
         int[] iterationTable = {1,0,-1,0,1};
-        
-        System.out.println(row + " " + column);
-        
         int start = (row << 16) + column;
         queue.add(start);
-        
-        System.out.println("rows: " + labyrinth.rows + " columns: " + labyrinth.columns);
  
         while(!queue.isEmpty()){ 
             int target = queue.poll();
-           
             for(int i = 0; i < 4; i++){
                 int neighbourRow = (target >> 16) + iterationTable[i];
                 int neighbourColumn = target - ((target >> 16) << 16) + iterationTable[i+1];
-                System.out.println(neighbourRow + " row and column " + neighbourColumn);
                 
                 if(neighbourRow >= 0 && neighbourRow < labyrinth.rows && neighbourColumn >= 0 &&
                    neighbourColumn < labyrinth.columns){
@@ -40,10 +33,8 @@ public class Solutions implements ActionListener {
                         queue.add(neighbour);
                         visited.add(neighbour);
                         parents.put(neighbour, target);
-
                     } else if(labyrinth.grid[neighbourRow][neighbourColumn] == 'X'){
-                        Path path = new Path(mainframe, components, pathNr,
-                                    this.labyrinth);
+                        Path path = new Path(mainframe, components, pathNr, this.labyrinth);
                         ArrayList<Integer> pathFound = new ArrayList<>();
                         parents.put(neighbour, target);
                         int currentNode = neighbour;
@@ -56,7 +47,6 @@ public class Solutions implements ActionListener {
 
                         path.path = pathFound;
                         labyrinth.solutions.add(path);
-                        System.out.println(pathFound);
                     }
                 }
             }
@@ -70,6 +60,7 @@ public class Solutions implements ActionListener {
             mainframe.remove(1);
             pathNr=0;
         }
+        this.labyrinth.solutions = new ArrayList<Path>();
         this.solve();
         solutions = new JPanel();
         solutions.setLayout(new GridLayout(labyrinth.solutions.size()/3+1,3));
