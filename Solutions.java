@@ -1,17 +1,17 @@
-import java.util.ArrayList;
+// import java.util.ArrayList;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.util.*;
 
-public class Solutions implements ActionListener {
+public class Solutions implements ActionListener{
     Labyrinth labyrinth;
     JPanel mainframe, solutions;
     JButton[][] components;
     int pathNr = 0, row, column;
     // ArrayList<Path> pathContainer;
 
-    public void solve() {
+    public void solve(){
         HashSet<Integer> visited = new HashSet<>();
         Deque<Integer> queue = new LinkedList<>();
         HashMap<Integer, Integer> parents = new HashMap<>();

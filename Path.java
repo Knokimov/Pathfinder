@@ -1,6 +1,7 @@
 import java.util.ArrayList;
-import java.awt.*;
+import java.awt.Color;
 import java.awt.event.*;
+// import java.awt.event.ActionEvent;
 import javax.swing.*;
 
 public class Path implements ActionListener {
@@ -11,10 +12,10 @@ public class Path implements ActionListener {
     ArrayList<Integer> path;
     
     @Override
-    public void actionPerformed (ActionEvent e) {
+    public void actionPerformed(ActionEvent e) {
+        
         this.reset();
         for(int i = 0; i < labyrinth.solutions.get(pathNr).path.size(); i+=2){
-            // System.out.println(i);
             components[labyrinth.solutions.get(pathNr).path.get(i)][labyrinth.solutions.get(pathNr).path.get(i+1)].setBackground(Color.BLUE);
                 mainframe.revalidate();
         }
