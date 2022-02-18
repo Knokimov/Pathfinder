@@ -1,61 +1,108 @@
-import javax.swing.*;
 import java.io.File;
-import java.awt.*;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.Scanner;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.*;
+import javax.swing.*;
 import java.util.*;
 
 public class Labyrinth{ 
-    char grid[][];
     File file;
-    int rows, columns;
+    Square grid[][];
+    int rows = 1, columns = 1;
     ArrayList<Path> solutions;
-    JPanel mainframe, solutionFrame;
-    JButton[][] components;
+    JPanel mainframe, gridPanel;
+
+    public void solve(int row, int column){
+        this.solutions = new ArrayList<Path>();
+        HashSet<Integer> visited = new HashSet<>();
+        Deque<Integer> queue = new LinkedList<>();
+        HashMap<Integer, Integer> parentTree = new HashMap<>();
+        int[] iterationTable = {1,0,-1,0,1};
+        int start = (row << 16) + column;
+        queue.add(start);
+        int pathNr = 0;
+ 
+        while(!queue.isEmpty()){ 
+            int target = queue.poll();
+            for(int i = 0; i < 4; i++){
+                int neighbourRow = (target >> 16) + iterationTable[i];
+                int neighbourColumn = target - ((target >> 16) << 16) + iterationTable[i+1];
+                if(neighbourRow >= 0 && neighbourRow < this.rows && neighbourColumn >= 0 &&
+                   neighbourColumn < this.columns){
+                    int neighbour = (neighbourRow << 16) + neighbourColumn;
+                    if(this.grid[neighbourRow][neighbourColumn].sign == '.' && !(visited.contains(neighbour))){
+                        queue.add(neighbour);
+                        visited.add(neighbour);
+                        parentTree.put(neighbour, target);
+                    } else if(this.grid[neighbourRow][neighbourColumn].sign == 'X'){
+                        ArrayList<Integer> pathFound = new ArrayList<>();
+                        parentTree.put(neighbour, target);
+                        int currentNode = neighbour;
+                        
+                        while(parentTree.containsKey(currentNode)){
+                            pathFound.add(currentNode >> 16);
+                            pathFound.add(currentNode - ((currentNode >> 16) << 16));
+                            currentNode = parentTree.get(currentNode);
+                        }
+                        Path path = new Path(this, pathFound);
+                        this.solutions.add(path);
+                    }
+                }
+            }
+            visited.add(target);
+        }
+    }
+
+    public void reset(){
+        for (Square[] x: this.grid){
+            for(Square y: x){
+                if(y.button.getBackground() != Color.BLACK && y.button.getBackground() != Color.GREEN){
+                    y.button.setBackground(Color.WHITE);
+                }
+            }
+        }
+    }
+
     
     Labyrinth(File file) throws FileNotFoundException{
         this.file = file;
+        this.gridPanel = new JPanel();
         this.solutions = new ArrayList<Path>();
-        
+        this.mainframe = new JPanel();
+        this.mainframe.setPreferredSize(new Dimension(2000,2000));
         try{
             Scanner scanner = new Scanner(file);
             String firstLine = scanner.nextLine();
             String[] rowsAndColumns = firstLine.split(" ");
-            
             this.rows = Integer.parseInt(rowsAndColumns[0]);
             this.columns = Integer.parseInt(rowsAndColumns[1]);
-            this.grid = new char[this.rows][this.columns];
+            this.grid = new Square[this.rows][this.columns];
+            this.gridPanel.setLayout(new GridLayout(this.rows,this.columns));
             int rowNr = 0;
             
-            while(scanner.hasNextLine()) {
+            while(scanner.hasNextLine()){
                 String line = scanner.nextLine();
-                
                 char[] row = new char[line.length()];
-                for (int i = 0; i < line.length(); i++) {
-                    row[i] = line.charAt(i);
-                }
-
                 int columnNr = 0;
-                
-                for(char x: row){
-                    if(x == '.') {
+                for(int i = 0; i < line.length(); i++){ 
+                    if(line.charAt(i) == '.'){
                         if(columnNr == 0 || columnNr == columns - 1 || rowNr == 0 || rowNr == rows -1){
-                            grid[rowNr][columnNr] =  'X';
+                            grid[rowNr][columnNr] = new Square(this, rowNr, columnNr, 'X');
+                        } else{
+                            grid[rowNr][columnNr] = new Square(this, rowNr, columnNr, '.');
                         }
-                        else{
-                            grid[rowNr][columnNr] = '.';
-                        }
+                    } else if(line.charAt(i) == '#'){
+                            grid[rowNr][columnNr] = new Square(this, rowNr, columnNr, '#');
                     }
-                    else if (x == '#'){
-                        grid[rowNr][columnNr] = '#'; 
-                    }
+                    gridPanel.add(grid[rowNr][columnNr].button);
                     columnNr++;
                 }
                 rowNr++;
             }
             scanner.close();
+            mainframe.add(gridPanel);
         }
         catch(Exception e){
             System.out.println(e);
