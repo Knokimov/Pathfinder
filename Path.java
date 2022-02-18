@@ -1,39 +1,34 @@
 import java.util.ArrayList;
 import java.awt.Color;
-import java.awt.event.*;
-// import java.awt.event.ActionEvent;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 
 public class Path implements ActionListener {
     Labyrinth labyrinth;
-    JPanel mainframe;
-    JButton[][] components;
     int pathNr;
     ArrayList<Integer> path;
-    
+   
     @Override
     public void actionPerformed(ActionEvent e) {
-        
         this.reset();
         for(int i = 0; i < labyrinth.solutions.get(pathNr).path.size(); i+=2){
-            components[labyrinth.solutions.get(pathNr).path.get(i)][labyrinth.solutions.get(pathNr).path.get(i+1)].setBackground(Color.BLUE);
-                mainframe.revalidate();
+            this.labyrinth.grid[labyrinth.solutions.get(pathNr).path.get(i)][labyrinth.solutions.get(pathNr).path.get(i+1)].button.setBackground(Color.BLUE);
+            this.labyrinth.mainframe.revalidate();
         }
     }
 
     public void reset(){
-        for (JButton[] x: this.components){
-            for(JButton y: x){
-                if(y.getBackground() != Color.BLACK){
-                    y.setBackground(Color.WHITE);
+        for (Square[] x: this.labyrinth.grid){
+            for(Square y: x){
+                if(y.button.getBackground() != Color.BLACK){
+                    y.button.setBackground(Color.WHITE);
                 }
             }
         }
     }
 
-    public Path(JPanel mainframe, JButton[][] components, int pathNr, Labyrinth labyrinth){
-        this.mainframe = mainframe;
-        this.components = components;
+    public Path(Labyrinth labyrinth, int pathNr){
         this.pathNr = pathNr;
         this.labyrinth = labyrinth;
     }

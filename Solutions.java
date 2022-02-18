@@ -11,48 +11,48 @@ public class Solutions implements ActionListener{
     int pathNr = 0, row, column;
     // ArrayList<Path> pathContainer;
 
-    public void solve(){
-        HashSet<Integer> visited = new HashSet<>();
-        Deque<Integer> queue = new LinkedList<>();
-        HashMap<Integer, Integer> parents = new HashMap<>();
-        int[] iterationTable = {1,0,-1,0,1};
-        int start = (row << 16) + column;
-        queue.add(start);
+    // public void solve(){
+    //     HashSet<Integer> visited = new HashSet<>();
+    //     Deque<Integer> queue = new LinkedList<>();
+    //     HashMap<Integer, Integer> parents = new HashMap<>();
+    //     int[] iterationTable = {1,0,-1,0,1};
+    //     int start = (row << 16) + column;
+    //     queue.add(start);
  
-        while(!queue.isEmpty()){ 
-            int target = queue.poll();
-            for(int i = 0; i < 4; i++){
-                int neighbourRow = (target >> 16) + iterationTable[i];
-                int neighbourColumn = target - ((target >> 16) << 16) + iterationTable[i+1];
+    //     while(!queue.isEmpty()){ 
+    //         int target = queue.poll();
+    //         for(int i = 0; i < 4; i++){
+    //             int neighbourRow = (target >> 16) + iterationTable[i];
+    //             int neighbourColumn = target - ((target >> 16) << 16) + iterationTable[i+1];
                 
-                if(neighbourRow >= 0 && neighbourRow < labyrinth.rows && neighbourColumn >= 0 &&
-                   neighbourColumn < labyrinth.columns){
-                    int neighbour = (neighbourRow << 16) + neighbourColumn;
+    //             if(neighbourRow >= 0 && neighbourRow < labyrinth.rows && neighbourColumn >= 0 &&
+    //                neighbourColumn < labyrinth.columns){
+    //                 int neighbour = (neighbourRow << 16) + neighbourColumn;
                     
-                    if(labyrinth.grid[neighbourRow][neighbourColumn] == '.' && !(visited.contains(neighbour))){
-                        queue.add(neighbour);
-                        visited.add(neighbour);
-                        parents.put(neighbour, target);
-                    } else if(labyrinth.grid[neighbourRow][neighbourColumn] == 'X'){
-                        Path path = new Path(mainframe, components, pathNr, this.labyrinth);
-                        ArrayList<Integer> pathFound = new ArrayList<>();
-                        parents.put(neighbour, target);
-                        int currentNode = neighbour;
+    //                 if(labyrinth.grid[neighbourRow][neighbourColumn] == '.' && !(visited.contains(neighbour))){
+    //                     queue.add(neighbour);
+    //                     visited.add(neighbour);
+    //                     parents.put(neighbour, target);
+    //                 } else if(labyrinth.grid[neighbourRow][neighbourColumn] == 'X'){
+    //                     Path path = new Path(mainframe, components, pathNr, this.labyrinth);
+    //                     ArrayList<Integer> pathFound = new ArrayList<>();
+    //                     parents.put(neighbour, target);
+    //                     int currentNode = neighbour;
                         
-                        while(parents.containsKey(currentNode)){
-                            pathFound.add(currentNode >> 16);
-                            pathFound.add(currentNode - ((currentNode >> 16) << 16));
-                            currentNode = parents.get(currentNode);
-                        }
+    //                     while(parents.containsKey(currentNode)){
+    //                         pathFound.add(currentNode >> 16);
+    //                         pathFound.add(currentNode - ((currentNode >> 16) << 16));
+    //                         currentNode = parents.get(currentNode);
+    //                     }
 
-                        path.path = pathFound;
-                        labyrinth.solutions.add(path);
-                    }
-                }
-            }
-            visited.add(target);
-        }
-    }
+    //                     path.path = pathFound;
+    //                     labyrinth.solutions.add(path);
+    //                 }
+    //             }
+    //         }
+    //         visited.add(target);
+    //     }
+    // }
     
     @Override
     public void actionPerformed (ActionEvent e) {
@@ -61,7 +61,7 @@ public class Solutions implements ActionListener{
             pathNr=0;
         }
         this.labyrinth.solutions = new ArrayList<Path>();
-        this.solve();
+        labyrinth.solve(row,column);
         solutions = new JPanel();
         solutions.setLayout(new GridLayout(labyrinth.solutions.size()/3+1,3));
         mainframe.revalidate();
@@ -81,10 +81,10 @@ public class Solutions implements ActionListener{
         mainframe.revalidate();
     }
 
-    public Solutions(Labyrinth labyrinth, JPanel mainframe, JButton[][] components, int row, int column){
+    public Solutions(Labyrinth labyrinth, int row, int column){
         this.labyrinth = labyrinth;
-        this.mainframe = mainframe;
-        this.components = components;
+        this.mainframe = labyrinth.mainframe;
+        this.components = labyrinth.components;
         this.row = row;
         this.column = column;
     }
