@@ -54,6 +54,17 @@ public class Labyrinth{
             visited.add(target);
         }
     }
+
+    public void reset(){
+        for (Square[] x: this.grid){
+            for(Square y: x){
+                if(y.button.getBackground() != Color.BLACK && y.button.getBackground() != Color.GREEN){
+                    y.button.setBackground(Color.WHITE);
+                }
+            }
+        }
+    }
+
     
     Labyrinth(File file) throws FileNotFoundException{
         this.file = file;

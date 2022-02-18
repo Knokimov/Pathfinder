@@ -14,7 +14,8 @@ public class Square implements ActionListener{
         if(labyrinth.mainframe.getComponentCount()>1){
             labyrinth.mainframe.remove(1);
         }
-        labyrinth.solve(row,column);
+        this.labyrinth.reset(); 
+        this.labyrinth.solve(row,column);
         JPanel solutionPanel = new JPanel();
         solutionPanel.setLayout(new GridLayout(labyrinth.solutions.size()/3+1,3));
         labyrinth.mainframe.revalidate();
