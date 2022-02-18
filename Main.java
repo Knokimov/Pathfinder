@@ -48,12 +48,10 @@ class Main {
             
             if(l.grid[i][j] == '#'){
                 nr.setBackground(Color.BLACK);
-            }
-            else if (l.grid[i][j] == '.'){
+            } else if (l.grid[i][j] == '.'){
                 nr.setBackground(Color.WHITE);
                 nr.addActionListener(new Solutions(l, panel, components, i, j));
             }
-
             nr.setHorizontalAlignment(JLabel.CENTER);
             nr.setVerticalAlignment(JLabel.CENTER);
             nr.setBorder(BorderFactory.createLineBorder(Color.BLACK));
