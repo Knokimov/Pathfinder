@@ -1,4 +1,3 @@
-import java.awt.*;
 import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -15,10 +14,10 @@ class Main {
             // System.exit(1);
         // } else {
                 // File f = chooser.getSelectedFile();
-                File f = new File("/home/andrey/Desktop/Compare/Pathfinder/labyrinths/5.in");
+                File file = new File("/home/andrey/Desktop/Compare/Pathfinder/labyrinths/5.in");
                 // Scanner reader = null;
             try {
-                labyrinth = new Labyrinth(f);            
+                labyrinth = new Labyrinth(file);            
                 // reader = new Scanner(f);
                 // String firstLine = reader.nextLine();
                 // String[] rowsAndColumns = firstLine.split(" ");

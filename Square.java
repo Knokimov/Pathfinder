@@ -5,36 +5,34 @@ import javax.swing.*;
 
 public class Square implements ActionListener{
     Labyrinth labyrinth;
-    JButton button;
+    int row, column;
     char sign;
-    int pathNr = 0, row, column;
+    JButton button;
 
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent e){
         if(labyrinth.mainframe.getComponentCount()>1){
             labyrinth.mainframe.remove(1);
-            pathNr=0;
         }
         labyrinth.solve(row,column);
         JPanel solutionPanel = new JPanel();
         solutionPanel.setLayout(new GridLayout(labyrinth.solutions.size()/3+1,3));
         labyrinth.mainframe.revalidate();
+        this.button.setBackground(Color.GREEN);
 
-        for(Path x: labyrinth.solutions){
-            JButton nr = new JButton("Solution: " + (pathNr+1));
-            nr.setPreferredSize(new Dimension(200,50));
-            nr.setHorizontalAlignment(JLabel.CENTER);
-            nr.setVerticalAlignment(JLabel.CENTER);
-            nr.setBackground(Color.GREEN);
-            nr.addActionListener(new Path(labyrinth, pathNr));
-            solutionPanel.add(nr);
-            pathNr++;
+        for(int i = 0; i < labyrinth.solutions.size(); i++){
+            JButton solutionButton = new JButton("Solution: " + (i+1));
+            solutionButton.setPreferredSize(new Dimension(200,50));
+            solutionButton.setHorizontalAlignment(JLabel.CENTER);
+            solutionButton.setVerticalAlignment(JLabel.CENTER);
+            solutionButton.setBackground(Color.GREEN);
+            solutionButton.addActionListener(this.labyrinth.solutions.get(i));
+            solutionPanel.add(solutionButton);
         }
         solutionPanel.setAlignmentX(10);
         labyrinth.mainframe.add(solutionPanel);
         labyrinth.mainframe.revalidate();
     }
-    
 
     public Square(Labyrinth labyrinth, int row, int column, char sign){
         this.labyrinth = labyrinth;
@@ -42,7 +40,6 @@ public class Square implements ActionListener{
         this.column = column;
         this.sign = sign;
         this.button = new JButton();
-
         if(this.sign == '#'){
             this.button.setBackground(Color.BLACK);
         } else {
@@ -53,9 +50,5 @@ public class Square implements ActionListener{
         this.button.setHorizontalAlignment(JLabel.CENTER);
         this.button.setVerticalAlignment(JLabel.CENTER);
         this.button.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-    }
-    
-    public boolean equals(char x){
-        return this.sign == x;
     }
 }
