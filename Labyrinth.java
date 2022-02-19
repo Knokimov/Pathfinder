@@ -35,8 +35,6 @@ public class Labyrinth{
                         visited.add(neighbour);
                         parentTree.put(neighbour, target);
                     } else if(this.grid[neighbourRow][neighbourColumn].sign == 'X' && !(visited.contains(neighbour))){
-                        // queue.add(neighbour);
-                        // visited.add(neighbour);
                         ArrayList<Integer> pathFound = new ArrayList<>();
                         pathFound.add(start >> 16);
                         pathFound.add(start - ((start >> 16) << 16));
