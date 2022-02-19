@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.*;
 
 public class Path implements ActionListener{
     Labyrinth labyrinth;
@@ -11,7 +10,8 @@ public class Path implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e){
         this.labyrinth.reset();
-        for(int i = 0; i < this.path.size(); i+=2){
+        this.labyrinth.grid[this.path.get(0)][this.path.get(1)].button.setBackground(Color.GREEN);
+        for(int i = 2; i < this.path.size(); i+=2){
             this.labyrinth.grid[this.path.get(i)][this.path.get(i+1)].button.setBackground(Color.BLUE);
             this.labyrinth.mainframe.revalidate();
         }
