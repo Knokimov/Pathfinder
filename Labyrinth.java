@@ -1,6 +1,5 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Scanner;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.*;
@@ -22,7 +21,6 @@ public class Labyrinth{
         int[] iterationTable = {1,0,-1,0,1};
         int start = (row << 16) + column;
         queue.add(start);
-        int pathNr = 0;
  
         while(!queue.isEmpty()){ 
             int target = queue.poll();
@@ -36,8 +34,12 @@ public class Labyrinth{
                         queue.add(neighbour);
                         visited.add(neighbour);
                         parentTree.put(neighbour, target);
-                    } else if(this.grid[neighbourRow][neighbourColumn].sign == 'X'){
+                    } else if(this.grid[neighbourRow][neighbourColumn].sign == 'X' && !(visited.contains(neighbour))){
+                        // queue.add(neighbour);
+                        // visited.add(neighbour);
                         ArrayList<Integer> pathFound = new ArrayList<>();
+                        pathFound.add(start >> 16);
+                        pathFound.add(start - ((start >> 16) << 16));
                         parentTree.put(neighbour, target);
                         int currentNode = neighbour;
                         
@@ -56,15 +58,14 @@ public class Labyrinth{
     }
 
     public void reset(){
-        for (Square[] x: this.grid){
+        for(Square[] x: this.grid){
             for(Square y: x){
-                if(y.button.getBackground() != Color.BLACK && y.button.getBackground() != Color.GREEN){
+                if(y.button.getBackground() != Color.BLACK){
                     y.button.setBackground(Color.WHITE);
                 }
             }
         }
     }
-
     
     Labyrinth(File file) throws FileNotFoundException{
         this.file = file;

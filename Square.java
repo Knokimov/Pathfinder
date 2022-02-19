@@ -13,12 +13,13 @@ public class Square implements ActionListener{
     public void actionPerformed(ActionEvent e){
         if(labyrinth.mainframe.getComponentCount()>1){
             labyrinth.mainframe.remove(1);
+            labyrinth.mainframe.repaint();
         }
-        this.labyrinth.reset(); 
+        this.labyrinth.reset();
         this.labyrinth.solve(row,column);
+        labyrinth.mainframe.revalidate();
         JPanel solutionPanel = new JPanel();
         solutionPanel.setLayout(new GridLayout(labyrinth.solutions.size()/3+1,3));
-        labyrinth.mainframe.revalidate();
         this.button.setBackground(Color.GREEN);
 
         for(int i = 0; i < labyrinth.solutions.size(); i++){
